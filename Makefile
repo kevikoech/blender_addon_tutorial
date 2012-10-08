@@ -1,4 +1,4 @@
 
 all:
-	sphinx-build -b html ~/doc ~/doc/html
-	echo "firefox ~/doc/html/readme.html"
+	sphinx-build -b html . ./html
+	echo "firefox ./html/readme.html"
