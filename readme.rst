@@ -10,8 +10,10 @@ Introduction
 Intended Audience
 =================
 
-This tutorial is designed to help technical artists or developers learn to extend blender. A programming background
-isn't necessary but you will need to have done at least a basic python tutorial.
+This tutorial is designed to help technical artists or developers learn to extend blender. An understanding of the basics of python is expected for those working through this tutorial.
+
+
+(JN: NOTE) I WILL HAVE TO ADD A SECTION TO OUR QUICKSTART ON RUNNING SCRIPTS FROM THE TEXT EDITOR. I ADDED A PREREQ FOR THIS BUT THE DOCS FOR THIS DONT REALLY EXIST ANYWHERE.
 
 
 Prerequisites
@@ -19,22 +21,41 @@ Prerequisites
 
 Before going through the tutorial you should...
 
-* Have an understanding of python primitive types (int, boolean, string, list, tuple, dictionary & set).
+* Familiarity with the basics of working in Blender.
 
-* Be familiar with python modules.
+* Know how to run a script in blenders text editor (as documented in the quick-start)
+
+* Have an understanding of python primitive types (int, boolean, string, list, tuple, dictionary, and set).
+
+* Be familiar with the concept of python modules.
 
 * Basic understanding of classes (object orientation) in python.
 
 
 Suggested reading before starting this tutorial.
 
-* `Dive Into Python <http://getpython3.com/diveintopython3/index.html>`_ sections (1, 2, 3, 4 & 7).
-* `Blender API Quickstart <http://www.blender.org/documentation/blender_python_api_2_63_release/info_quickstart.html>`_
+* `Dive Into Python <http://getpython3.com/diveintopython3/index.html>`_ sections (1, 2, 3, 4, and 7).
+* `Blender API Quickstart <http://www.blender.org/documentation/blender_python_api_2_64_release/info_quickstart.html>`_
   to help become familiar with blender/python basics.
 
 
 To best troubleshoot any error message python prints while writing scripts you run blender with from a terminal,
-see: `Use The Terminal <http://www.blender.org/documentation/blender_python_api_2_63_release/info_tips_and_tricks.html#use-the-terminal>`_
+see: `Use The Terminal <http://www.blender.org/documentation/blender_python_api_2_64_release/info_tips_and_tricks.html#use-the-terminal>`_
+
+Documentation Links
+===================
+
+While going through the tutorial you may want to look into our reference documentation.
+
+* `Blender API Overview <http://www.blender.org/documentation/blender_python_api_2_64_release/info_overview.html>`_
+  this document is rather detailed but helpful if you want to know more on a topic.
+
+* `bpy.context <http://www.blender.org/documentation/blender_python_api_2_64_release/bpy.context.html>`_ api reference,
+  handy to have a list of available items your script may operate on.
+
+* `bpy.types.Operator <http://www.blender.org/documentation/blender_python_api_2_64_release/bpy.types.Operator.html>`_
+  the following addons define operators, these docs give details and more examples of operators.
+
 
 
 ******
@@ -42,13 +63,12 @@ Addons
 ******
 
 
-What is an Addon
-================
+What is an Addon?
+=================
 
-An addon is simply a python module with some additional requirements so blender can display it in a list with useful
-information.
+An addon is simply a python module with some additional requirements so Blender can display it in a list with useful information.
 
-To give an example, here is the most simple possible addon.
+To give an example, here is the simplest possible addon.
 
 
 .. code-block:: python
@@ -66,44 +86,38 @@ To give an example, here is the most simple possible addon.
 * ``unregister`` is a function to unload anything setup by ``register``, this is called when the addon is disabled.
 
 
-Notice this addon does not do anything related to blender, (the ``bpy`` module is not imported for example).
+
+Notice this addon does not do anything related to Blender, (the ``bpy`` module is not imported for example).
+
+(JN: FIXUP)
+This is a contrived example of an addon that serves to illustrate the point that the base requirements of an addon are simple.
 
 An addon will typically register operators, panels, menu items etc, but its worth noting that _any_ script can do this,
 when executed from the text editor or even the interactive console - there is nothing inherently different about an
-addon that allows it to integrate with blender, such functionality is just provided by the ``bpy`` module for any
+addon that allows it to integrate with Blender, such functionality is just provided by the ``bpy`` module for any
 script to access.
 
-So an addon is just a way to encapsulate a python module in a way a user can easily grasp.
+So an addon is just a way to encapsulate a python module in a way a user can easily utilize.
 
+.. note::
 
-Documentation Links
-===================
-
-While going through the tutorial you may want to look into our reference documentation.
-
-* `Blender API Overview <http://www.blender.org/documentation/blender_python_api_2_63_release/info_overview.html>`_
-  this document is rather detailed but helpful if you want to know more on a topic.
-
-* `bpy.context <http://www.blender.org/documentation/blender_python_api_2_63_release/bpy.context.html>`_ api reference,
-  handy to have a list of available items your script may operate on.
-
-* `bpy.types.Operator <http://www.blender.org/documentation/blender_python_api_2_63_release/bpy.types.Operator.html>`_
-  the following addons define operators, these docs give details and more examples of operators.
+   (JN: FIXUP) Running this script within the text editor won't print anything, to see the output it must be installed through the user preferences.
+   Messages will be printed when enabling and disabling.
+   (JN: NOTE) I DONT THINK ITS WORTH GETTING THE USER TO INSTALL THIS ADDON, IF YOU THINK ITS IS (COULD BE AN OK EXERCISE I GUESS), THEN THE INSTALLATION SECTION MUST BE INCLUDED EARLIER.
 
 
 Your First Addon
 ================
 
-The simplest possible addon was useful as an example but not much else, this addon is very simple but shows how to
-integrate a script into blender using an ``Operator`` which is the typical way to define a tool accessed from menus,
-buttons and keyboard shortcuts.
-
-
-Write The Script (Simple)
--------------------------
+The simplest possible addon above was useful as an example but not much else. This next addon is simple but shows how to integrate a script into Blender using an ``Operator`` which is the typical way to define a tool accessed from menus, buttons and keyboard shortcuts.
 
 For the first example we'll make a script that simply moves all objects in a scene.
 
+
+Write The Script
+----------------
+
+Add the following script to the text editor in Blender.
 
 .. code-block:: python
 
@@ -114,14 +128,14 @@ For the first example we'll make a script that simply moves all objects in a sce
        obj.location.x += 1.0
 
 
-The example above is quite self explanatory, all objects in the active scene are moved.
+Click the Run Script button, all objects in the active scene are moved by 1.0 Blender unit.
 Next we'll make this script into an addon.
 
 
 Write the Addon (Simple)
 ------------------------
 
-This addon takes the body of the script above, and adds them to an operators execute function.
+This addon takes the body of the script above, and adds them to an operator's ``execute()`` function.
 
 
 .. code-block:: python
@@ -135,7 +149,7 @@ This addon takes the body of the script above, and adds them to an operators exe
 
 
    class ObjectMoveX(bpy.types.Operator):
-       """My Object Moving Script"""      # blender will use this as a tooltip.
+       """My Object Moving Script"""      # blender will use this as a tooltip for menu items and buttons.
        bl_idname = "object.move_x"        # unique identifier for buttons and menu items to reference.
        bl_label = "Move X by One"         # display name in the interface.
        bl_options = {'REGISTER', 'UNDO'}  # enable undo for the operator.
@@ -175,8 +189,11 @@ directly and call register immediately.
 
 However running the script wont move any objects, for this you need to execute the newly registered operator.
 
-Do this by pressing ``SpaceBar`` to bring up the operator search dialog and type in "Move X by One" (the bl_label),
+Do this by pressing ``SpaceBar`` to bring up the operator search dialog and type in "Move X by One" (the bl_info name),
 then press ``Enter``.
+
+(JN: NOTE) RE YOUR POINT ABOUT TOOLTIP MISSING FROM SEARCH, I ADDED SMALL NOTE THAT THE """My Object Moving Script""" IS FOR MENUS AND BUTTONS, PERHAPS THIS REMOVES SOME CONFUSION ABOUT NOW SHOWING IN SEARCH, IT COULD BE '.. note::' THAT TOOLTIPS DONT SHOW IN SPACEBAR SEARCH, BUT I THINK WE RISK LITTERING TUTORIAL WITH NOT-SO-USEFUL DETAILS.
+
 
 The objects should move as before.
 
@@ -214,4 +231,5 @@ Further Reading
 ---------------
 
 TODO
+
 
