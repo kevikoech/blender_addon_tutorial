@@ -10,10 +10,7 @@ Introduction
 Intended Audience
 =================
 
-This tutorial is designed to help technical artists or developers learn to extend blender. An understanding of the basics of python is expected for those working through this tutorial.
-
-
-(JN: NOTE) I WILL HAVE TO ADD A SECTION TO OUR QUICKSTART ON RUNNING SCRIPTS FROM THE TEXT EDITOR. I ADDED A PREREQ FOR THIS BUT THE DOCS FOR THIS DONT REALLY EXIST ANYWHERE.
+This tutorial is designed to help technical artists or developers learn to extend blender. An understanding of the basics of Python is expected for those working through this tutorial.
 
 
 Prerequisites
@@ -25,21 +22,21 @@ Before going through the tutorial you should...
 
 * Know how to run a script in blenders text editor (as documented in the quick-start)
 
-* Have an understanding of python primitive types (int, boolean, string, list, tuple, dictionary, and set).
+* Have an understanding of Python primitive types (int, boolean, string, list, tuple, dictionary, and set).
 
-* Be familiar with the concept of python modules.
+* Be familiar with the concept of Python modules.
 
-* Basic understanding of classes (object orientation) in python.
+* Basic understanding of classes (object orientation) in Python.
 
 
 Suggested reading before starting this tutorial.
 
 * `Dive Into Python <http://getpython3.com/diveintopython3/index.html>`_ sections (1, 2, 3, 4, and 7).
 * `Blender API Quickstart <http://www.blender.org/documentation/blender_python_api_2_64_release/info_quickstart.html>`_
-  to help become familiar with blender/python basics.
+  to help become familiar with Blender/Python basics.
 
 
-To best troubleshoot any error message python prints while writing scripts you run blender with from a terminal,
+To best troubleshoot any error message Python prints while writing scripts you run blender with from a terminal,
 see: `Use The Terminal <http://www.blender.org/documentation/blender_python_api_2_64_release/info_tips_and_tricks.html#use-the-terminal>`_
 
 Documentation Links
@@ -66,12 +63,12 @@ Addons
 What is an Addon?
 =================
 
-An addon is simply a python module with some additional requirements so Blender can display it in a list with useful information.
+An addon is simply a Python module with some additional requirements so Blender can display it in a list with useful information.
 
 To give an example, here is the simplest possible addon.
 
 
-.. code-block:: python
+.. code-block:: Python
 
    bl_info = {"name": "My Test Addon", "category": "Object"}
    def register():
@@ -80,7 +77,7 @@ To give an example, here is the simplest possible addon.
        print("Goodbye World")
 
 
-* ``bl_info`` is a dictionary containing addon meta-data such as the title, version and author.
+* ``bl_info`` is a dictionary containing addon meta-data such as the title, version and author to be displayed in the user preferences addon list.
 * ``register`` is a function which only runs when enabling the addon, this means the module can be loaded without
   activating the addon.
 * ``unregister`` is a function to unload anything setup by ``register``, this is called when the addon is disabled.
@@ -89,7 +86,6 @@ To give an example, here is the simplest possible addon.
 
 Notice this addon does not do anything related to Blender, (the ``bpy`` module is not imported for example).
 
-(JN: FIXUP)
 This is a contrived example of an addon that serves to illustrate the point that the base requirements of an addon are simple.
 
 An addon will typically register operators, panels, menu items etc, but its worth noting that _any_ script can do this,
@@ -97,13 +93,12 @@ when executed from the text editor or even the interactive console - there is no
 addon that allows it to integrate with Blender, such functionality is just provided by the ``bpy`` module for any
 script to access.
 
-So an addon is just a way to encapsulate a python module in a way a user can easily utilize.
+So an addon is just a way to encapsulate a Python module in a way a user can easily utilize.
 
 .. note::
 
-   (JN: FIXUP) Running this script within the text editor won't print anything, to see the output it must be installed through the user preferences.
+   Running this script within the text editor won't print anything, to see the output it must be installed through the user preferences.
    Messages will be printed when enabling and disabling.
-   (JN: NOTE) I DONT THINK ITS WORTH GETTING THE USER TO INSTALL THIS ADDON, IF YOU THINK ITS IS (COULD BE AN OK EXERCISE I GUESS), THEN THE INSTALLATION SECTION MUST BE INCLUDED EARLIER.
 
 
 Your First Addon
@@ -189,10 +184,9 @@ directly and call register immediately.
 
 However running the script wont move any objects, for this you need to execute the newly registered operator.
 
-Do this by pressing ``SpaceBar`` to bring up the operator search dialog and type in "Move X by One" (the bl_info name),
+Do this by pressing ``SpaceBar`` to bring up the operator search dialog and type in "Move X by One" (the ``bl_label``),
 then press ``Enter``.
 
-(JN: NOTE) RE YOUR POINT ABOUT TOOLTIP MISSING FROM SEARCH, I ADDED SMALL NOTE THAT THE """My Object Moving Script""" IS FOR MENUS AND BUTTONS, PERHAPS THIS REMOVES SOME CONFUSION ABOUT NOW SHOWING IN SEARCH, IT COULD BE '.. note::' THAT TOOLTIPS DONT SHOW IN SPACEBAR SEARCH, BUT I THINK WE RISK LITTERING TUTORIAL WITH NOT-SO-USEFUL DETAILS.
 
 
 The objects should move as before.
