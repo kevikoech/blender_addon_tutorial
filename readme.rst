@@ -10,7 +10,8 @@ Introduction
 Intended Audience
 =================
 
-This tutorial is designed to help technical artists or developers learn to extend blender. An understanding of the basics of Python is expected for those working through this tutorial.
+This tutorial is designed to help technical artists or developers learn to extend blender.
+An understanding of the basics of Python is expected for those working through this tutorial.
 
 
 Prerequisites
@@ -63,7 +64,8 @@ Addons
 What is an Addon?
 =================
 
-An addon is simply a Python module with some additional requirements so Blender can display it in a list with useful information.
+An addon is simply a Python module with some additional requirements so Blender can display it in a list with useful
+information.
 
 To give an example, here is the simplest possible addon.
 
@@ -77,7 +79,8 @@ To give an example, here is the simplest possible addon.
        print("Goodbye World")
 
 
-* ``bl_info`` is a dictionary containing addon meta-data such as the title, version and author to be displayed in the user preferences addon list.
+* ``bl_info`` is a dictionary containing addon meta-data such as the title, version and author to be displayed in the
+  user preferences addon list.
 * ``register`` is a function which only runs when enabling the addon, this means the module can be loaded without
   activating the addon.
 * ``unregister`` is a function to unload anything setup by ``register``, this is called when the addon is disabled.
@@ -86,7 +89,8 @@ To give an example, here is the simplest possible addon.
 
 Notice this addon does not do anything related to Blender, (the ``bpy`` module is not imported for example).
 
-This is a contrived example of an addon that serves to illustrate the point that the base requirements of an addon are simple.
+This is a contrived example of an addon that serves to illustrate the point
+that the base requirements of an addon are simple.
 
 An addon will typically register operators, panels, menu items etc, but its worth noting that _any_ script can do this,
 when executed from the text editor or even the interactive console - there is nothing inherently different about an
@@ -97,14 +101,17 @@ So an addon is just a way to encapsulate a Python module in a way a user can eas
 
 .. note::
 
-   Running this script within the text editor won't print anything, to see the output it must be installed through the user preferences.
+   Running this script within the text editor won't print anything,
+   to see the output it must be installed through the user preferences.
    Messages will be printed when enabling and disabling.
 
 
 Your First Addon
 ================
 
-The simplest possible addon above was useful as an example but not much else. This next addon is simple but shows how to integrate a script into Blender using an ``Operator`` which is the typical way to define a tool accessed from menus, buttons and keyboard shortcuts.
+The simplest possible addon above was useful as an example but not much else.
+This next addon is simple but shows how to integrate a script into Blender using an ``Operator``
+which is the typical way to define a tool accessed from menus, buttons and keyboard shortcuts.
 
 For the first example we'll make a script that simply moves all objects in a scene.
 
@@ -124,10 +131,10 @@ Add the following script to the text editor in Blender.
 
 
 .. image:: run_script.png
-   :width: 924px
-   :align: center
-   :height: 574px
-   :alt: Run Script button
+    :width: 924px
+    :align: center
+    :height: 574px
+    :alt: Run Script button
 
 Click the Run Script button, all objects in the active scene are moved by 1.0 Blender unit.
 Next we'll make this script into an addon.
@@ -191,10 +198,10 @@ directly and call register immediately.
 However running the script wont move any objects, for this you need to execute the newly registered operator.
 
 .. image:: spacebar.png
-   :width: 924px
-   :align: center
-   :height: 574px
-   :alt: Spacebar
+    :width: 924px
+    :align: left
+    :height: 574px
+    :alt: Spacebar
 
 Do this by pressing ``SpaceBar`` to bring up the operator search dialog and type in "Move X by One" (the ``bl_label``),
 then press ``Enter``.
