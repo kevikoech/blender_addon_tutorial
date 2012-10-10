@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# BlenderInstituteFarm documentation build configuration file, created by
+# Addon documentation build configuration file, created by
 # sphinx-quickstart on Fri Jun 22 10:23:22 2012.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -184,7 +184,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('contense', 'BlenderInstituteFarm.tex', 'BlenderInstituteFarm Documentation',
+  ('contense', 'BlenderAddonDoc.tex', 'Addon Documentation',
    'Campbell Barton', 'manual'),
 ]
 
@@ -214,7 +214,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('contense', 'blenderinstitutefarm', 'BlenderInstituteFarm Documentation',
+    ('contense', 'addon_docs', 'Addon Documentation Documentation',
      ['Campbell Barton'], 1)
 ]
 
@@ -228,8 +228,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('contense', 'BlenderInstituteFarm', 'BlenderInstituteFarm Documentation',
-   'Campbell Barton', 'BlenderInstituteFarm', 'One line description of project.',
+  ('contense', 'Addon', 'Addon Documentation',
+   'Campbell Barton', 'Addon', 'One line description of project.',
    'Miscellaneous'),
 ]
 
