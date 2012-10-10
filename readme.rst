@@ -123,6 +123,12 @@ Add the following script to the text editor in Blender.
        obj.location.x += 1.0
 
 
+.. image:: run_script.png
+    :width: 924px
+    :align: left
+    :height: 574px
+    :alt: Run Script button
+
 Click the Run Script button, all objects in the active scene are moved by 1.0 Blender unit.
 Next we'll make this script into an addon.
 
@@ -184,6 +190,12 @@ directly and call register immediately.
 
 However running the script wont move any objects, for this you need to execute the newly registered operator.
 
+.. image:: spacebar.png
+    :width: 924px
+    :align: left
+    :height: 574px
+    :alt: Spacebar
+
 Do this by pressing ``SpaceBar`` to bring up the operator search dialog and type in "Move X by One" (the ``bl_label``),
 then press ``Enter``.
 
@@ -225,5 +237,4 @@ Further Reading
 ---------------
 
 TODO
-
 
