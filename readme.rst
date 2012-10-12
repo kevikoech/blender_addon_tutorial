@@ -232,8 +232,9 @@ press **Save as Default**.
 
 .. note::
 
-   The destination of the addon depends on your configuration, the source and destination path are printed in the
-   console. You can also find addon path locations by running this in the python console.
+   The destination of the addon depends on your Blender configuration.
+   When installing an addon the source and destination path are printed in the console.
+   You can also find addon path locations by running this in the python console.
 
    .. code-block:: python
 
