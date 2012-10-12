@@ -1,4 +1,4 @@
-##############
+
 Addon Tutorial
 ##############
 
@@ -290,6 +290,10 @@ Now try copy this script into blender and run it on the default cube.
 After running, notice that when you go into edit-mode to change the cube - all of the copies change,
 in Blender this is known as *Linked-Duplicates*.
 
+
+Write the Addon
+---------------
+
 Next, we're going to do this in a loop, to make an array of objects between the active object and the cursor.
 
 
@@ -322,7 +326,7 @@ With this script you'll notice we're doing some math with the object location an
 3D **Vector** instances, a convenient class provided by the **mathutils** module and allows vectors to be multiplied
 by numbers and matrices.
 
-If you are interested to read into **mathutils.Vector** utility functions there are many handy utility functions
+If you are interested in this area, read into **mathutils.Vector** - there are many handy utility functions
 such as getting the angle between vectors, cross product, dot products
 as well as more advanced functions in **mathutils.geometry** such as bezier spline interpolation and
 ray-triangle intersection.
@@ -487,12 +491,6 @@ Brining it all together
 
    if __name__ == "__main__":
        register()
-
-
-Write the Addon
----------------
-
-TODO
 
 
 Conclude
