@@ -464,13 +464,11 @@ Brining it all together
            cursor = scene.cursor_location
            obj = scene.objects.active
 
-           total = 10
-
-           for i in range(total):
+           for i in range(self.total):
                obj_new = obj.copy()
                scene.objects.link(obj_new)
 
-               factor = i / total
+               factor = i / self.total
                obj_new.location = (obj.location * factor) + (cursor * (1.0 - factor))
 
            return {'FINISHED'}
