@@ -131,10 +131,10 @@ Add the following script to the text editor in Blender.
 
 
 .. image:: run_script.png
-    :width: 924px
-    :align: center
-    :height: 574px
-    :alt: Run Script button
+   :width: 924px
+   :align: center
+   :height: 574px
+   :alt: Run Script button
 
 Click the Run Script button, all objects in the active scene are moved by 1.0 Blender unit.
 Next we'll make this script into an addon.
@@ -198,10 +198,10 @@ directly and call register immediately.
 However running the script wont move any objects, for this you need to execute the newly registered operator.
 
 .. image:: spacebar.png
-    :width: 924px
-    :align: left
-    :height: 574px
-    :alt: Spacebar
+   :width: 924px
+   :align: center
+   :height: 574px
+   :alt: Spacebar
 
 Do this by pressing ``SpaceBar`` to bring up the operator search dialog and type in "Move X by One" (the ``bl_label``),
 then press ``Enter``.
@@ -210,22 +210,268 @@ then press ``Enter``.
 
 The objects should move as before.
 
+*Keep this addon open in blender for the next step - Installing.*
 
 Install The Addon
 -----------------
 
-TODO
+Once you have your addon within in Blender's text editor, you will want to be able to install it so it can be enabled in
+the user preferences to load on startup.
+
+Even though the addon above is a test, lets go through the steps anyway so you know how to do it for later.
+
+To install the blender text as an addon you will first have to save it to disk, take care to obey the naming
+restrictions that apply to python modules and end with a ``.py`` extension.
+
+Once the file is on disk, you can install it as you would for an addon downloaded online.
+
+Open the user **File -> User Preferences**, Select the **Addon** section, Press **Install from File** in the header.
+
+Now the addon will be listed and you can enable it by pressing the check-box, if you want it to be enabled on restart,
+press **Save as Default**.
 
 Your Second Addon
 =================
 
-TODO
+For our second addon, we will focus on object instancing - this is - to make linked copies of an object in a
+similar way to what you may have seen with the array modifier.
 
 
 Write The Script
 ----------------
 
-TODO
+As before, first we will start with a script, develop it, then convert into an addon.
+
+.. code-block:: python
+
+   import bpy
+   from bpy import context
+
+   # Get the current scene
+   scene = context.scene
+
+   # Get the 3D cursor
+   cursor = scene.cursor_location
+
+   # Get the active object (assume we have one)
+   obj = scene.objects.active
+
+   # Now make a copy of the object
+   obj_new = obj.copy()
+
+   # The object won't automatically get into a new scene
+   scene.objects.link(obj_new)
+
+   # Now we can place the object
+   obj_new.location = cursor
+
+
+Now try copy this script into blender and run it on the default cube.
+
+
+... go off and test ...
+
+
+After running, notice that when you go into edit-mode to change the cube - all of the copies change,
+in Blender this is known as *Linked-Duplicates*.
+
+Next, we're going to do this in a loop, to make an array of objects between the active object and the cursor.
+
+
+.. code-block:: python
+
+   import bpy
+   from bpy import context
+
+   scene = context.scene
+   cursor = scene.cursor_location
+   obj = scene.objects.active
+
+   # Use a fixed value for now, eventually make this user adjustable
+   total = 10
+
+   # Add 'total' objects into the scene
+   for i in range(total):
+       obj_new = obj.copy()
+       scene.objects.link(obj_new)
+
+       # Now place the object in between the cursor
+       # and the active object based on 'i'
+       factor = i / total
+       obj_new.location = (obj.location * factor) + (cursor * (1.0 - factor))
+
+
+Try run this script with with the active object and the cursor spaced apart to see the result.
+
+With this script you'll notice we're doing some math with the object location and cursor, this works because both are
+3D **Vector** instances, a convenient class provided by the **mathutils** module and allows vectors to be multiplied
+by numbers and matrices.
+
+If you are interested to read into **mathutils.Vector** utility functions there are many handy utility functions
+such as getting the angle between vectors, cross product, dot products
+as well as more advanced functions in **mathutils.geometry** such as bezier spline interpolation and
+ray-triangle intersection.
+
+For now we'll focus on making this script an addon, but its good to know that this 3D math module is available and
+can help you with more advanced functionality later on.
+
+
+The first step is to convert the script as-is into an addon.
+
+
+.. code-block:: python
+
+   bl_info = {
+       "name": "Cursor Array",
+       "category": "Object",
+   }
+
+   import bpy
+
+
+   class ObjectCursorArray(bpy.types.Operator):
+       """Object Cursor Array"""
+       bl_idname = "object.cursor_array"
+       bl_label = "Cursor Array"
+       bl_options = {'REGISTER', 'UNDO'}
+
+       def execute(self, context):
+           scene = context.scene
+           cursor = scene.cursor_location
+           obj = scene.objects.active
+
+           total = 10
+
+           for i in range(total):
+               obj_new = obj.copy()
+               scene.objects.link(obj_new)
+
+               factor = i / total
+               obj_new.location = (obj.location * factor) + (cursor * (1.0 - factor))
+
+           return {'FINISHED'}
+
+   def register():
+       bpy.utils.register_class(ObjectCursorArray)
+
+
+   def unregister():
+       bpy.utils.unregister_class(ObjectCursorArray)
+
+
+   if __name__ == "__main__":
+       register()
+
+
+Everything here has been covered in the previous steps, you may want to try run the addon still
+and consider what could be done to make it more useful.
+
+
+... go off and test ...
+
+
+Two of the most obvious thing is that having the total fixed at 10, and having to access the operator from
+space-bar is not very convenient.
+
+Both these additions are explained next, with the final script afterwards.
+
+
+Operator Property
+^^^^^^^^^^^^^^^^^
+
+Operator properties are defined via bpy.props module, this is added to the class body.
+
+.. code-block:: python
+
+   # in the body of the class...
+   total = bpy.props.IntProperty()
+
+   # and this is accessed on the class
+   # instance within the execute() function as...
+   self.total
+
+
+These properties are handled specially by blender when the class is registered
+so they display as buttons in the user interface.
+There are many arguments you can pass to properties to set limits, change the default and display a tooltip.
+
+see: `bpy.props <http://www.blender.org/documentation/blender_python_api_2_64_release/bpy.props.html#bpy.props.IntProperty>`_
+
+
+Menu Item
+^^^^^^^^^
+
+Addons can add to the user interface of existing panels, headers and menus defined in Python.
+
+For this example we'll add to an existing menu.
+
+To find the identifier of a menu you can hover your mouse over the menu item and the identifier is displayed.
+
+The method used for adding a menu item is to append a draw function into an existing class.
+
+
+.. code-block:: python
+
+   def menu_func(self, context):
+       self.layout.operator(ObjectCursorArray.bl_idname)
+
+   def register():
+       bpy.types.VIEW3D_MT_object.append(menu_func)
+
+
+Brining it all together
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code-block:: python
+
+   bl_info = {
+       "name": "Cursor Array",
+       "category": "Object",
+   }
+
+   import bpy
+
+
+   class ObjectCursorArray(bpy.types.Operator):
+       """Object Cursor Array"""
+       bl_idname = "object.cursor_array"
+       bl_label = "Cursor Array"
+       bl_options = {'REGISTER', 'UNDO'}
+
+       total = bpy.props.IntProperty()
+
+       def execute(self, context):
+           scene = context.scene
+           cursor = scene.cursor_location
+           obj = scene.objects.active
+
+           total = 10
+
+           for i in range(total):
+               obj_new = obj.copy()
+               scene.objects.link(obj_new)
+
+               factor = i / total
+               obj_new.location = (obj.location * factor) + (cursor * (1.0 - factor))
+
+           return {'FINISHED'}
+
+
+   def menu_func(self, context):
+       self.layout.operator(ObjectCursorArray.bl_idname)
+
+
+   def register():
+       bpy.utils.register_class(ObjectCursorArray)
+       bpy.types.VIEW3D_MT_object.append(menu_func)
+
+
+   def unregister():
+       bpy.utils.unregister_class(ObjectCursorArray)
+       bpy.types.VIEW3D_MT_object.remove(menu_func)
+
+   if __name__ == "__main__":
+       register()
 
 
 Write the Addon
