@@ -389,7 +389,7 @@ and consider what could be done to make it more useful.
 ... go off and test ...
 
 
-Two of the most obvious thing is that having the total fixed at 10, and having to access the operator from
+The two of the most obvious missing things are - having the total fixed at 10, and having to access the operator from
 space-bar is not very convenient.
 
 Both these additions are explained next, with the final script afterwards.
