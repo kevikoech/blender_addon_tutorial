@@ -230,6 +230,20 @@ Open the user **File -> User Preferences**, Select the **Addon** section, Press 
 Now the addon will be listed and you can enable it by pressing the check-box, if you want it to be enabled on restart,
 press **Save as Default**.
 
+.. note::
+
+   The destination of the addon depends on your configuration, the source and destination path are printed in the
+   console. You can also find addon path locations by running this in the python console.
+
+   .. code-block:: python
+
+      import addon_utils
+      print(addon_utils.paths())
+
+   More is written on this topic here:
+   `Directory Layout <http://wiki.blender.org/index.php/Doc:2.6/Manual/Introduction/Installing_Blender/DirectoryLayout>`_
+
+
 Your Second Addon
 =================
 
