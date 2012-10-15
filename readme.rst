@@ -496,6 +496,21 @@ Brining it all together
    if __name__ == "__main__":
        register()
 
+.. image:: in_menu.png
+   :width: 591px
+   :align: center
+   :height: 649px
+   :alt: In the menu
+
+Run the script (or save it and add it through the Preferences like before) and it will appear in the menu.
+
+.. image:: op_prop.png
+   :width: 669px
+   :align: center
+   :height: 644px
+   :alt: Operator Property
+
+After selecting it from the menu, you can choose how many instance of the cube you want created.
 
 Conclude
 ========
