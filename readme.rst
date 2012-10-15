@@ -10,7 +10,7 @@ Introduction
 Intended Audience
 =================
 
-This tutorial is designed to help technical artists or developers learn to extend blender.
+This tutorial is designed to help technical artists or developers learn to extend Blender.
 An understanding of the basics of Python is expected for those working through this tutorial.
 
 
@@ -192,7 +192,7 @@ This addon takes the body of the script above, and adds them to an operator's ``
           so script authors should prefer the ``context`` argument passed to operators.
    
 
-To test the script you can copy and paste this into blender text editor and run it, this will execute the script
+To test the script you can copy and paste this into Blender text editor and run it, this will execute the script
 directly and call register immediately.
 
 However running the script wont move any objects, for this you need to execute the newly registered operator.
@@ -210,7 +210,7 @@ then press ``Enter``.
 
 The objects should move as before.
 
-*Keep this addon open in blender for the next step - Installing.*
+*Keep this addon open in Blender for the next step - Installing.*
 
 Install The Addon
 -----------------
@@ -220,12 +220,12 @@ the user preferences to load on startup.
 
 Even though the addon above is a test, lets go through the steps anyway so you know how to do it for later.
 
-To install the blender text as an addon you will first have to save it to disk, take care to obey the naming
-restrictions that apply to python modules and end with a ``.py`` extension.
+To install the Blender text as an addon you will first have to save it to disk, take care to obey the naming
+restrictions that apply to Python modules and end with a ``.py`` extension.
 
 Once the file is on disk, you can install it as you would for an addon downloaded online.
 
-Open the user **File -> User Preferences**, Select the **Addon** section, Press **Install from File** in the header.
+Open the user **File -> User Preferences**, Select the **Addon** section, press **Install Addon...** and select the file. 
 
 Now the addon will be listed and you can enable it by pressing the check-box, if you want it to be enabled on restart,
 press **Save as Default**.
@@ -234,7 +234,7 @@ press **Save as Default**.
 
    The destination of the addon depends on your Blender configuration.
    When installing an addon the source and destination path are printed in the console.
-   You can also find addon path locations by running this in the python console.
+   You can also find addon path locations by running this in the Python console.
 
    .. code-block:: python
 
@@ -281,7 +281,7 @@ As before, first we will start with a script, develop it, then convert into an a
    obj_new.location = cursor
 
 
-Now try copy this script into blender and run it on the default cube.
+Now try copy this script into Blender and run it on the default cube. Make sure you click to move the 3D cursor before running as the duplicate will appear at the cursor's location.
 
 
 ... go off and test ...
@@ -290,9 +290,6 @@ Now try copy this script into blender and run it on the default cube.
 After running, notice that when you go into edit-mode to change the cube - all of the copies change,
 in Blender this is known as *Linked-Duplicates*.
 
-
-Write the Addon
----------------
 
 Next, we're going to do this in a loop, to make an array of objects between the active object and the cursor.
 
@@ -334,6 +331,9 @@ ray-triangle intersection.
 For now we'll focus on making this script an addon, but its good to know that this 3D math module is available and
 can help you with more advanced functionality later on.
 
+
+Write the Addon
+---------------
 
 The first step is to convert the script as-is into an addon.
 
@@ -398,11 +398,11 @@ Both these additions are explained next, with the final script afterwards.
 Operator Property
 ^^^^^^^^^^^^^^^^^
 
-Operator properties are defined via bpy.props module, this is added to the class body.
+To get rid of the literal 10 for `total`, we'll us an operator property. Operator properties are defined via bpy.props module, this is added to the class body.
 
 .. code-block:: python
 
-   # in the body of the class...
+   # moved assignment from execute() to the body of the class...
    total = bpy.props.IntProperty()
 
    # and this is accessed on the class
@@ -410,7 +410,7 @@ Operator properties are defined via bpy.props module, this is added to the class
    self.total
 
 
-These properties are handled specially by blender when the class is registered
+These properties are handled specially by Blender when the class is registered
 so they display as buttons in the user interface.
 There are many arguments you can pass to properties to set limits, change the default and display a tooltip.
 
@@ -423,6 +423,12 @@ Menu Item
 Addons can add to the user interface of existing panels, headers and menus defined in Python.
 
 For this example we'll add to an existing menu.
+
+.. image:: menu_id.png
+   :width: 334px
+   :align: center
+   :height: 128px
+   :alt: Menu Identifier
 
 To find the identifier of a menu you can hover your mouse over the menu item and the identifier is displayed.
 
