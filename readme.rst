@@ -447,7 +447,7 @@ The method used for adding a menu item is to append a draw function into an exis
 For docs on menus see: `bpy.types.Menu <http://www.blender.org/documentation/blender_python_api_2_64_release/bpy.types.Menu.html#extending-menus>`_
 
 
-Brining it all together
+Bringing it all together
 ^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: python
