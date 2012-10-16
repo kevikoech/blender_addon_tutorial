@@ -444,6 +444,9 @@ The method used for adding a menu item is to append a draw function into an exis
        bpy.types.VIEW3D_MT_object.append(menu_func)
 
 
+For docs on menus see: `bpy.types.Menu <http://www.blender.org/documentation/blender_python_api_2_64_release/bpy.types.Menu.html#extending-menus>`_
+
+
 Brining it all together
 ^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -511,6 +514,14 @@ Run the script (or save it and add it through the Preferences like before) and i
    :alt: Operator Property
 
 After selecting it from the menu, you can choose how many instance of the cube you want created.
+
+
+.. note::
+
+   Directly executing the script multiple times will add the menu each time too.
+   While not useful behavior, theres nothing to worry about since addons won't register them selves multiple
+   times when enabled through the user preferences.
+
 
 Conclude
 ========
