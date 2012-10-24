@@ -398,23 +398,33 @@ Both these additions are explained next, with the final script afterwards.
 Operator Property
 ^^^^^^^^^^^^^^^^^
 
+There are a variety of property types that are used for tool settings, common property types include: int, float, vector, color, boolean and string.
+
+These properties are handled differently to typical Python class attributes because Blender needs to be display them in the interface, store their settings in keymaps and keep settings for re-use.
+
+While this is handled in a fairly Pythonic way, be mindful that you are in fact defining tool settings that
+are loaded into Blender and accessed by other parts of Blender, outside of Python.
+
+
 To get rid of the literal 10 for `total`, we'll us an operator property. Operator properties are defined via bpy.props module, this is added to the class body.
 
 .. code-block:: python
 
    # moved assignment from execute() to the body of the class...
-   total = bpy.props.IntProperty()
+   total = bpy.props.IntProperty(name="Steps", min=1, max=100)
 
    # and this is accessed on the class
    # instance within the execute() function as...
    self.total
 
 
-These properties are handled specially by Blender when the class is registered
+These properties from ``bpy.props`` are handled specially by Blender when the class is registered
 so they display as buttons in the user interface.
 There are many arguments you can pass to properties to set limits, change the default and display a tooltip.
 
 see: `bpy.props <http://www.blender.org/documentation/blender_python_api_2_64_release/bpy.props.html#bpy.props.IntProperty>`_
+
+This document doesn't go into details about using other property types, however the link above includes examples of more advanced property usage.
 
 
 Menu Item
@@ -448,7 +458,7 @@ For docs on menus see: `bpy.types.Menu <http://www.blender.org/documentation/ble
 
 
 Bringing it all together
-^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: python
 
@@ -466,7 +476,7 @@ Bringing it all together
        bl_label = "Cursor Array"
        bl_options = {'REGISTER', 'UNDO'}
 
-       total = bpy.props.IntProperty()
+       total = bpy.props.IntProperty(name="Steps", min=1, max=100)
 
        def execute(self, context):
            scene = context.scene
