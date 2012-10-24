@@ -411,7 +411,7 @@ To get rid of the literal 10 for `total`, we'll us an operator property. Operato
 .. code-block:: python
 
    # moved assignment from execute() to the body of the class...
-   total = bpy.props.IntProperty(name="Steps", min=1, max=100)
+   total = bpy.props.IntProperty(name="Steps", default=2, min=1, max=100)
 
    # and this is accessed on the class
    # instance within the execute() function as...
@@ -476,7 +476,7 @@ Bringing it all together
        bl_label = "Cursor Array"
        bl_options = {'REGISTER', 'UNDO'}
 
-       total = bpy.props.IntProperty(name="Steps", min=1, max=100)
+       total = bpy.props.IntProperty(name="Steps", default=2, min=1, max=100)
 
        def execute(self, context):
            scene = context.scene
