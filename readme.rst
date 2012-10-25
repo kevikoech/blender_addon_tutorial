@@ -470,7 +470,6 @@ In Blender addons have their own key-maps so as not to interfere with Blenders b
 In the example below, a new object-mode ``KeyMap`` is added, then a ``KeyMapItem`` is added to the key-map which
 references our newly added operator, using Ctrl+Shift+Space as the key shortcut to activate it.
 
-notice how a global list is used to store the key-map for later removal. 
 
 .. code-block:: python
 
@@ -497,6 +496,10 @@ notice how a global list is used to store the key-map for later removal.
            wm.keyconfigs.addon.keymaps.remove(km)
        # clear the list,  XXX. 'addon_keymaps.clear()' is nicer Py3.3 only use this when we upgrade
        del addon_keymaps[:]
+
+
+Notice how the key-map item can have a different total setting then the default set in the operator,
+this allows you to have multiple keys accessing the same operator with different settings.
 
 
 .. note::
