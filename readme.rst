@@ -464,7 +464,7 @@ Keymap
 In Blender addons have their own key-maps so as not to interfere with Blenders built in key-maps.
 
 In the example below, a new object-mode ``KeyMap`` is added, then a ``KeyMapItem`` is added to the key-map which
-references our newly added operator, using Shift+Space as the key shortcut to activate it.
+references our newly added operator, using Ctrl+Shift+Space as the key shortcut to activate it.
 
 notice how a global list is used to store the key-map for later removal. 
 
