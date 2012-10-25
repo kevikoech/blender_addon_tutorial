@@ -498,7 +498,7 @@ references our newly added operator, using Ctrl+Shift+Space as the key shortcut 
        del addon_keymaps[:]
 
 
-Notice how the key-map item can have a different total setting then the default set in the operator,
+Notice how the key-map item can have a different ``total`` setting then the default set by the operator,
 this allows you to have multiple keys accessing the same operator with different settings.
 
 
