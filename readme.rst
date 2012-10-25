@@ -398,15 +398,19 @@ Both these additions are explained next, with the final script afterwards.
 Operator Property
 ^^^^^^^^^^^^^^^^^
 
-There are a variety of property types that are used for tool settings, common property types include: int, float, vector, color, boolean and string.
+There are a variety of property types that are used for tool settings, common property types include:
+int, float, vector, color, boolean and string.
 
-These properties are handled differently to typical Python class attributes because Blender needs to be display them in the interface, store their settings in keymaps and keep settings for re-use.
+These properties are handled differently to typical Python class attributes
+because Blender needs to be display them in the interface,
+store their settings in key-maps and keep settings for re-use.
 
 While this is handled in a fairly Pythonic way, be mindful that you are in fact defining tool settings that
 are loaded into Blender and accessed by other parts of Blender, outside of Python.
 
 
-To get rid of the literal 10 for `total`, we'll us an operator property. Operator properties are defined via bpy.props module, this is added to the class body.
+To get rid of the literal 10 for `total`, we'll us an operator property.
+Operator properties are defined via bpy.props module, this is added to the class body.
 
 .. code-block:: python
 
@@ -480,7 +484,7 @@ notice how a global list is used to store the key-map for later removal.
        km = wm.keyconfigs.addon.keymaps.new(name='Object Mode', space_type='EMPTY')
 
        kmi = km.keymap_items.new(ObjectCursorArray.bl_idname, 'SPACE', 'PRESS', ctrl=True, shift=True)
-       kmi.total = 4
+       kmi.properties.total = 4
 
        addon_keymaps.append(km)
 
@@ -502,8 +506,6 @@ notice how a global list is used to store the key-map for later removal.
    conflict with important functionality within Blender.
 
 For API documentation on the functions listed above, see:
-
-See:
 `bpy.types.KeyMaps.new <http://www.blender.org/documentation/blender_python_api_2_64_release/bpy.types.KeyMaps.html#bpy.types.KeyMaps.new>`_,
 `bpy.types.KeyMap <http://www.blender.org/documentation/blender_python_api_2_64_release/bpy.types.KeyMap.html#bpy.types.KeyMap>`_,
 `bpy.types.KeyMapItems.new <http://www.blender.org/documentation/blender_python_api_2_64_release/bpy.types.KeyMapItems.html#bpy.types.KeyMapItems.new>`_,
