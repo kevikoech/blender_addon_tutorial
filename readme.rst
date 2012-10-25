@@ -424,7 +424,8 @@ There are many arguments you can pass to properties to set limits, change the de
 
 see: `bpy.props <http://www.blender.org/documentation/blender_python_api_2_64_release/bpy.props.html#bpy.props.IntProperty>`_
 
-This document doesn't go into details about using other property types, however the link above includes examples of more advanced property usage.
+This document doesn't go into details about using other property types,
+however the link above includes examples of more advanced property usage.
 
 
 Menu Item
@@ -455,6 +456,58 @@ The method used for adding a menu item is to append a draw function into an exis
 
 
 For docs on menus see: `bpy.types.Menu <http://www.blender.org/documentation/blender_python_api_2_64_release/bpy.types.Menu.html#extending-menus>`_
+
+
+Keymap
+^^^^^^
+
+In Blender addons have their own key-maps so as not to interfere with Blenders built in key-maps.
+
+In the example below, a new object-mode ``KeyMap`` is added, then a ``KeyMapItem`` is added to the key-map which
+references our newly added operator, using Shift+Space as the key shortcut to activate it.
+
+notice how a global list is used to store the key-map for later removal. 
+
+.. code-block:: python
+
+   # store keymaps here to access after registration
+   addon_keymaps = []
+
+   def register():
+
+       # handle the keymap
+       wm = bpy.context.window_manager
+       km = wm.keyconfigs.addon.keymaps.new(name='Object Mode', space_type='EMPTY')
+
+       kmi = km.keymap_items.new(ObjectCursorArray.bl_idname, 'SPACE', 'PRESS', ctrl=True, shift=True)
+       kmi.total = 4
+
+       addon_keymaps.append(km)
+
+
+   def unregister():
+
+       # handle the keymap
+       wm = bpy.context.window_manager
+       for km in addon_keymaps:
+           wm.keyconfigs.addon.keymaps.remove(km)
+       # clear the list,  XXX. 'addon_keymaps.clear()' is nicer Py3.3 only use this when we upgrade
+       del addon_keymaps[:]
+
+
+.. note::
+
+   While Ctrl+Shift+Space isn't a default Blender key shortcut, its hard to make sure addons won't
+   overwrite each others keymaps, At least take care when assigning keys that they don't
+   conflict with important functionality within Blender.
+
+For API documentation on the functions listed above, see:
+
+See:
+`bpy.types.KeyMaps.new <http://www.blender.org/documentation/blender_python_api_2_64_release/bpy.types.KeyMaps.html#bpy.types.KeyMaps.new>`_,
+`bpy.types.KeyMap <http://www.blender.org/documentation/blender_python_api_2_64_release/bpy.types.KeyMap.html#bpy.types.KeyMap>`_,
+`bpy.types.KeyMapItems.new <http://www.blender.org/documentation/blender_python_api_2_64_release/bpy.types.KeyMapItems.html#bpy.types.KeyMapItems.new>`_,
+`bpy.types.KeyMapItem <http://www.blender.org/documentation/blender_python_api_2_64_release/bpy.types.KeyMapItem.html#bpy.types.KeyMapItem>`_,
 
 
 Bringing it all together
@@ -496,15 +549,32 @@ Bringing it all together
    def menu_func(self, context):
        self.layout.operator(ObjectCursorArray.bl_idname)
 
+   # store keymaps here to access after registration
+   addon_keymaps = []
+
 
    def register():
        bpy.utils.register_class(ObjectCursorArray)
        bpy.types.VIEW3D_MT_object.append(menu_func)
 
+       # handle the keymap
+       wm = bpy.context.window_manager
+       km = wm.keyconfigs.addon.keymaps.new(name='Object Mode', space_type='EMPTY')
+       kmi = km.keymap_items.new(ObjectCursorArray.bl_idname, 'SPACE', 'PRESS', shift=True)
+       kmi.properties.total = 4
+       addon_keymaps.append(km)
 
    def unregister():
        bpy.utils.unregister_class(ObjectCursorArray)
        bpy.types.VIEW3D_MT_object.remove(menu_func)
+
+       # handle the keymap
+       wm = bpy.context.window_manager
+       for km in addon_keymaps:
+           wm.keyconfigs.addon.keymaps.remove(km)
+       # clear the list
+       del addon_keymaps[:]
+
 
    if __name__ == "__main__":
        register()
