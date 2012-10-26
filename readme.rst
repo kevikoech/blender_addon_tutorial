@@ -565,7 +565,7 @@ Bringing it all together
        # handle the keymap
        wm = bpy.context.window_manager
        km = wm.keyconfigs.addon.keymaps.new(name='Object Mode', space_type='EMPTY')
-       kmi = km.keymap_items.new(ObjectCursorArray.bl_idname, 'SPACE', 'PRESS', shift=True)
+       kmi = km.keymap_items.new(ObjectCursorArray.bl_idname, 'SPACE', 'PRESS', ctrl=True, shift=True)
        kmi.properties.total = 4
        addon_keymaps.append(km)
 
