@@ -21,7 +21,7 @@ Before going through the tutorial you should...
 
 * Familiarity with the basics of working in Blender.
 
-* Know how to run a script in blenders text editor (as documented in the quick-start)
+* Know how to run a script in Blender's text editor (as documented in the quick-start)
 
 * Have an understanding of Python primitive types (int, boolean, string, list, tuple, dictionary, and set).
 
@@ -611,10 +611,32 @@ After selecting it from the menu, you can choose how many instance of the cube y
 Conclude
 ========
 
-TODO
+Addons can encapsulate certain functionality neatly for writing tools to improve your work-flow or for writing utilities
+for others to use.
+
+While there are limits to what Python can do within Blender, there is certainly a lot that can be achieved without
+having to dive into Blender's C/C++ code.
+
+The example given in the tutorial is limited, but shows the Blender API used for common tasks that you can expand on
+to write your own tools.
 
 
 Further Reading
 ---------------
 
-TODO
+Blender comes commented templates which are accessible from the text editor header, if you have specific areas
+you want to see example code for, this is a good place to start.
+
+
+`Blender/Python API Overview <http://www.blender.org/documentation/blender_python_api_2_64_release/info_overview.html>`_
+*For more background details on Blender/Python integration.*
+
+`How to Think Like a Computer Scientist <http://interactivepython.org/courselib/static/thinkcspy/index.html>`_
+*Great info for those who are still learning Python.*
+
+`Blender Development (Wiki) <http://wiki.blender.org/index.php/Dev:Contents>`_
+*Blender Development, general information and helpful links.*
+
+`Blender Artist (Coding Section) <http://blenderartists.org/forum/forumdisplay.php?47-Coding>`_
+*forum where people ask Python development questions*
+
