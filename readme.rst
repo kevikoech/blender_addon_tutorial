@@ -628,6 +628,8 @@ Blender comes commented templates which are accessible from the text editor head
 you want to see example code for, this is a good place to start.
 
 
+Here are some sites you might like to check on after completing this tutorial.
+
 `Blender/Python API Overview <http://www.blender.org/documentation/blender_python_api_2_64_release/info_overview.html>`_
 *For more background details on Blender/Python integration.*
 
