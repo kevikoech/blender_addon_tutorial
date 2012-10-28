@@ -639,6 +639,6 @@ Here are some sites you might like to check on after completing this tutorial.
 `Blender Development (Wiki) <http://wiki.blender.org/index.php/Dev:Contents>`_
 *Blender Development, general information and helpful links.*
 
-`Blender Artist (Coding Section) <http://blenderartists.org/forum/forumdisplay.php?47-Coding>`_
+`Blender Artists (Coding Section) <http://blenderartists.org/forum/forumdisplay.php?47-Coding>`_
 *forum where people ask Python development questions*
 
