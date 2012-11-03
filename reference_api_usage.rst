@@ -44,11 +44,11 @@ Here are some characteristics ID Data-Blocks share.
 - ID's are blend file data so loading a new blend file reloads an entire new set of Data-Blocks.
 - ID's can be accessed in Python from ``bpy.data.*``
 - Each data-block has a unique ``.name`` attribute, displayed in the interface.
-- Animation data is stored on ID's ``.animation_data``.
+- Animation data is stored in ID's ``.animation_data``.
 - ID's are the only data types that can be linked between blend files.
-- ID Data-Blocks can be added/copied and removed via Python.
-- Data-block inter-referencing is normally done at ID level.
+- ID's can be added/copied and removed via Python.
 - ID's have their own garbage-collection system which frees unused ID's when saving.
+- inter-referencing is typically done between ID's.
 
 
 Simple Data Access
