@@ -31,8 +31,9 @@ relative to them.
 ID Data
 -------
 
-ID Data-Blocks are used in Blender as top-level data containers blender,
-from the user interface this isn't quite so obvious, but when developing you need to be aware what an ID Data-Block is.
+ID Data-Blocks are used in Blender as top-level data containers.
+
+From the user interface this isn't so obvious, but when developing you need to know about ID Data-Blocks.
 
 ID data types include Scene, Group, Object, Mesh, Screen, World, Armature, Image and Texture.
 for a full list see the sub-classes of
