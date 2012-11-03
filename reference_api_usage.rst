@@ -15,16 +15,16 @@ Reference API Scope
 The reference API covers ``bpy.types``, which stores types accessed via ``bpy.context`` - *The user context*
 or ``bpy.data`` - *Blend file data*.
 
-Other modules such as ``bge``, ``bmesh`` and ``aud`` are not using blenders data API
+Other modules such as ``bge``, ``bmesh`` and ``aud`` are not using Blenders data API
 so this document doesn't apply to these modules.
 
 
 Data Access
 ===========
 
-The most common case for using the reference API is to find out how to access data.
+The most common case for using the reference API is to find out how to access data in the blend file.
 
-Before going any further its best to be aware of ID Data-Blocks in blender since you will often find properties
+Before going any further its best to be aware of ID Data-Blocks in Blender since you will often find properties
 relative to them.
 
 
