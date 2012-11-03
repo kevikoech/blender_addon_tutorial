@@ -24,7 +24,8 @@ Data Access
 
 The most common case for using the reference API is to find out how to access data.
 
-Lets start with a simple case, say you wan't a python script to adjust the objects location.
+Before going any further its best to be aware of ID Data-Blocks in blender since you will often find properties
+relative to them.
 
 
 ID Data
@@ -51,6 +52,8 @@ Here are some characteristics ID Data-Blocks share.
 
 Simple Data Access
 ------------------
+
+Lets start with a simple case, say you wan't a python script to adjust the objects location.
 
 Start by finding this setting in the interface ``Buttons Window -> Object -> Transform -> Location``
 
