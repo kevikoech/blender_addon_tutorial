@@ -48,7 +48,7 @@ Here are some characteristics ID Data-Blocks share.
 - ID's are the only data types that can be linked between blend files.
 - ID's can be added/copied and removed via Python.
 - ID's have their own garbage-collection system which frees unused ID's when saving.
-- inter-referencing is typically done between ID's.
+- When a datablock has a reference to some external data, this is typically an ID Data-Block.
 
 
 Simple Data Access
