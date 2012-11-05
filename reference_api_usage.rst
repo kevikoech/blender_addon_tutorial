@@ -41,7 +41,7 @@ for a full list see the sub-classes of
 
 Here are some characteristics ID Data-Blocks share.
 
-- ID's are blend file data so loading a new blend file reloads an entire new set of Data-Blocks.
+- ID's are blend file data, so loading a new blend file reloads an entire new set of Data-Blocks.
 - ID's can be accessed in Python from ``bpy.data.*``
 - Each data-block has a unique ``.name`` attribute, displayed in the interface.
 - Animation data is stored in ID's ``.animation_data``.
@@ -56,22 +56,22 @@ Simple Data Access
 
 Lets start with a simple case, say you wan't a python script to adjust the objects location.
 
-Start by finding this setting in the interface ``Buttons Window -> Object -> Transform -> Location``
+Start by finding this setting in the interface ``Properties Window -> Object -> Transform -> Location``
 
 From the button you can right click and select **Online Python Reference**, this will link you to:
 http://www.blender.org/documentation/blender_python_api_2_64_6/bpy.types.Object.html#bpy.types.Object.location
 
-Being an API reference this link often gives little more information then the tooltip, though some of the pages
-include examples, normally at the top of the page.
+Being an API reference, this link often gives little more information then the tooltip, though some of the pages
+include examples (normally at the top of the page).
 
-At this point you may say *Now What!* - you know that you have to use ``.location`` and that its an array of 3 floats
+At this point you may say *Now what?* - you know that you have to use ``.location`` and that its an array of 3 floats
 but you're still left wondering how to access this in a script.
 
 So the next step is to find out where to access objects, go down to the bottom of the page to the **References**
 section, for objects there are many references, but one of the most common places to access objects is via the context.
 
 In this case there are a few entries - for general use the ``bpy.context.active_object`` is fine, most of the other
-object members depend on the current mode.
+object members depend on the current mode. (CB: GIVEN THE REFERENCES SECTION HAS 100 LINKS, HOW WOULD THE USER KNOW TO PICK bpy.context.active_object? ALSO, CAN YOU GIVE AN EXAMPLE OF DIFFERENT MODES?)
 
 So now we have enough information to find the location of the current object.
 
@@ -131,7 +131,7 @@ Start by switching to the 'Compositing' screen, enabling **Use Nodes** from the 
 Now lets say we want to access the ``X`` button via python, to automatically adjust the size of blur nodes for example.
 
 
-- Right click on the **X** button and select the online manual takes you to ``bpy.types.CompositorNodeBlur.size_x``
+- Right click on the **X** button and select the online manual takes you to ``bpy.types.CompositorNodeBlur.size_x`` (CB: I GET AN ERROR SAYING THAT THERE IS NO PAGE AVAILABLE: No reference available 'CompositorNodeBlur.size_x', Update info in 'rna_wiki_reference.py'  or callback to bpy.utils.manual_map() )
 
 - Knowing this is accessed via ``size_x`` isn't helpful on its own, we want to know how this node is accessed too.
 
@@ -140,7 +140,7 @@ Now lets say we want to access the ``X`` button via python, to automatically adj
 
 - At the top of the page click on `CompositorNode(Node)`
 
-  *from there there are also no references*
+  *There are also no references from there*
 
 - At the top of the page click on `Node`, And scroll down to the References.
   Now there are quite a few references here, ``bpy.context.active_node`` may be what you're after
@@ -150,7 +150,7 @@ Now lets say we want to access the ``X`` button via python, to automatically adj
 
 - The ``CompositorNodeTree`` is referenced from ``Scene.node_tree``.
 
-Now you can use the python console to form the data path needed to access the nodes size_x, logically we now know.
+Now you can use the python console to form the data path needed to access the nodes size_x, logically we now know. (CB: YOU'VE NOT REALLY EXPLAINED THE "data path" CONCEPT)
 
 *Scene -> NodeTree -> Nodes -> Size X*
 
@@ -187,11 +187,11 @@ Start with the default scene and select the **Modifiers** tab, then add a **Subd
 Now hover your mouse over the button labeled **View**, The tooltip includes ``SubsurfModifier.levels`` but we want the
 path from the object to this property.
 
-``<ID>.<DATA_PATH>`` == ``PROPERTY``
+``<ID>.<DATA_PATH>`` == ``PROPERTY`` (CB: I THINK YOU NEED TO ELABORATE ON THIS)
 
-Type in the ID path into a Python console ``bpy.context.active_object.``
+Type in the ID path into a Python console ``bpy.context.active_object.`` Include the trailing dot and don't hit "enter", yet. 
 
-Now right click on the button and select **Copy Data Path**, then paste the result into the console.
+Now right click on the button and select **Copy Data Path**, then paste the result into the console right after ``bpy.context.active_object.``
 
 So now you could have the answer:
 
@@ -199,6 +199,12 @@ So now you could have the answer:
 
    bpy.context.active_object.modifiers["Subsurf"].levels
 
+Hit "enter" and you'll get the current value of 1. Now try changing the value to 2:
+
+-- code-block:: pyton
+  bpy.context.active_object.modifiers["Subsurf"].levels = 2
+
+You can see the value update in the Subdivision-Surface modifier's UI as well as the cube.
 
 == Operators ==
 
