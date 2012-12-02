@@ -144,7 +144,7 @@ There are a few ways to do this.
 - Use the Python console's auto-complete to inspect properties. *This can be hit-and-miss but has the advantage
   that you can easily see the values of properties and assign them too to interactively see the results.*
 
-- Copy the Data-Path from the user interface. *Explained in the next section*
+- Copy the Data-Path from the user interface. *Explained in 'Copy Data Path'*
 
 - Using the documentation to follow references. *Explained further in 'Indirect Data Access'*
 
@@ -152,9 +152,11 @@ There are a few ways to do this.
 Copy Data Path
 --------------
 
-Blender has a feature to copy the data-path which gives the path from an ``ID`` data-block, to its property.
-This shortcut can save having to use the API reference to click back up the references to find where data is accessed
-from.
+Blender can compute the Python string to a property which is shown in the tooltip, on the line below ``Python: ...``,
+This saves having to use the API reference to click back up the references to find where data is accessed from. (JN: NOTE - THIS IS NEW IN REV-52709. ADDED BECAUSE OF WRITING THIS DOC ;) )
+
+There is a user-interface feature to copy the data-path which gives the path from an ``ID`` data-block,
+to its property.
 
 To see how this works we'll get the path to the Subdivision-Surface modifiers subdivision setting.
 
@@ -163,13 +165,16 @@ Start with the default scene and select the **Modifiers** tab, then add a **Subd
 Now hover your mouse over the button labeled **View**, The tool-tip includes ``SubsurfModifier.levels`` but we want the
 path from the object to this property.
 
-``<ID>.<DATA_PATH>`` == ``PROPERTY`` (CB: I THINK YOU NEED TO ELABORATE ON THIS)
+Note that the text copied won't include the ``bpy.data.collection["name"].`` component since its assumed that
+you won't be doing collection lookups on every access and typically you'll want to use the context rather
+then access each ``ID`` by name.
+
 
 Type in the ID path into a Python console ``bpy.context.active_object.`` Include the trailing dot and don't hit "enter", yet. 
 
-Now right click on the button and select **Copy Data Path**, then paste the result into the console right after ``bpy.context.active_object.``
+Now right-click on the button and select **Copy Data Path**, then paste the result into the console.
 
-So now you could have the answer:
+So now you should have the answer:
 
 .. code-block:: python
 
@@ -177,7 +182,7 @@ So now you could have the answer:
 
 Hit "enter" and you'll get the current value of 1. Now try changing the value to 2:
 
--- code-block:: pyton
+-- code-block:: python
   bpy.context.active_object.modifiers["Subsurf"].levels = 2
 
 You can see the value update in the Subdivision-Surface modifier's UI as well as the cube.
@@ -186,8 +191,7 @@ You can see the value update in the Subdivision-Surface modifier's UI as well as
 Indirect Data Access
 --------------------
 
-So for this example we'll go over something more involved,
-and show the steps to access from the blur nodes size property.
+For this example we'll go over something more involved, showing the steps to access from the blur nodes size property.
 
 Start by switching to the 'Compositing' screen, enabling **Use Nodes** from the Header and add a blur node
 (Add -> Filter -> Blur).
@@ -214,7 +218,8 @@ Now lets say we want to access the ``X`` button via python, to automatically adj
 
 - The ``CompositorNodeTree`` is referenced from ``Scene.node_tree``.
 
-Now you can use the python console to form the data path needed to access the nodes size_x, logically we now know. (CB: YOU'VE NOT REALLY EXPLAINED THE "data path" CONCEPT)
+Now you can use the python console to form the nested properties needed to access the nodes size_x,
+logically we now know.
 
 *Scene -> NodeTree -> Nodes -> Size X*
 
