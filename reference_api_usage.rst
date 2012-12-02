@@ -146,7 +146,41 @@ There are a few ways to do this.
 
 - Copy the Data-Path from the user interface. *Explained in the next section*
 
-- Using the documentation and follow references. *Explained further in 'Indirect Data Access'*
+- Using the documentation to follow references. *Explained further in 'Indirect Data Access'*
+
+
+Copy Data Path
+--------------
+
+Blender has a feature to copy the data-path which gives the path from an ``ID`` datablock, to its property.
+This shortcut can save having to use the API reference to click back up the references to find where data is accessed
+from.
+
+To see how this works we'll get the path to the Subdivision-Surface modifiers subdivision setting.
+
+Start with the default scene and select the **Modifiers** tab, then add a **Subdivision-Surface** modifier to the cube.
+
+Now hover your mouse over the button labeled **View**, The tooltip includes ``SubsurfModifier.levels`` but we want the
+path from the object to this property.
+
+``<ID>.<DATA_PATH>`` == ``PROPERTY`` (CB: I THINK YOU NEED TO ELABORATE ON THIS)
+
+Type in the ID path into a Python console ``bpy.context.active_object.`` Include the trailing dot and don't hit "enter", yet. 
+
+Now right click on the button and select **Copy Data Path**, then paste the result into the console right after ``bpy.context.active_object.``
+
+So now you could have the answer:
+
+.. code-block:: python
+
+   bpy.context.active_object.modifiers["Subsurf"].levels
+
+Hit "enter" and you'll get the current value of 1. Now try changing the value to 2:
+
+-- code-block:: pyton
+  bpy.context.active_object.modifiers["Subsurf"].levels = 2
+
+You can see the value update in the Subdivision-Surface modifier's UI as well as the cube.
 
 
 Indirect Data Access
@@ -202,39 +236,6 @@ the tool to operate on what they have selected.
 For automation you are more likely to use ``bpy.data`` since you want to be able to access specific data and manipulate
 it, no matter what the user currently has the view set at.
 
-
-Copy Data Path
---------------
-
-Blender has a feature to copy the data-path which gives the path from an ``ID`` datablock, to its property.
-This shortcut can save having to use the API reference to click back up the references to find where data is accessed
-from.
-
-To see how this works we'll get the path to the Subdivision-Surface modifiers subdivision setting.
-
-Start with the default scene and select the **Modifiers** tab, then add a **Subdivision-Surface** modifier to the cube.
-
-Now hover your mouse over the button labeled **View**, The tooltip includes ``SubsurfModifier.levels`` but we want the
-path from the object to this property.
-
-``<ID>.<DATA_PATH>`` == ``PROPERTY`` (CB: I THINK YOU NEED TO ELABORATE ON THIS)
-
-Type in the ID path into a Python console ``bpy.context.active_object.`` Include the trailing dot and don't hit "enter", yet. 
-
-Now right click on the button and select **Copy Data Path**, then paste the result into the console right after ``bpy.context.active_object.``
-
-So now you could have the answer:
-
-.. code-block:: python
-
-   bpy.context.active_object.modifiers["Subsurf"].levels
-
-Hit "enter" and you'll get the current value of 1. Now try changing the value to 2:
-
--- code-block:: pyton
-  bpy.context.active_object.modifiers["Subsurf"].levels = 2
-
-You can see the value update in the Subdivision-Surface modifier's UI as well as the cube.
 
 == Operators ==
 
