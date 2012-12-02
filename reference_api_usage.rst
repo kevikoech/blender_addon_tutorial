@@ -48,7 +48,7 @@ Here are some characteristics ID Data-Blocks share.
 - ID's are the only data types that can be linked between blend files.
 - ID's can be added/copied and removed via Python.
 - ID's have their own garbage-collection system which frees unused ID's when saving.
-- When a datablock has a reference to some external data, this is typically an ID Data-Block.
+- When a data-block has a reference to some external data, this is typically an ID Data-Block.
 
 
 Simple Data Access
@@ -61,7 +61,7 @@ Start by finding this setting in the interface ``Properties Window -> Object -> 
 From the button you can right click and select **Online Python Reference**, this will link you to:
 http://www.blender.org/documentation/blender_python_api_2_64_6/bpy.types.Object.html#bpy.types.Object.location
 
-Being an API reference, this link often gives little more information then the tooltip, though some of the pages
+Being an API reference, this link often gives little more information then the tool-tip, though some of the pages
 include examples (normally at the top of the page).
 
 At this point you may say *Now what?* - you know that you have to use ``.location`` and that its an array of 3 floats
@@ -152,7 +152,7 @@ There are a few ways to do this.
 Copy Data Path
 --------------
 
-Blender has a feature to copy the data-path which gives the path from an ``ID`` datablock, to its property.
+Blender has a feature to copy the data-path which gives the path from an ``ID`` data-block, to its property.
 This shortcut can save having to use the API reference to click back up the references to find where data is accessed
 from.
 
@@ -160,7 +160,7 @@ To see how this works we'll get the path to the Subdivision-Surface modifiers su
 
 Start with the default scene and select the **Modifiers** tab, then add a **Subdivision-Surface** modifier to the cube.
 
-Now hover your mouse over the button labeled **View**, The tooltip includes ``SubsurfModifier.levels`` but we want the
+Now hover your mouse over the button labeled **View**, The tool-tip includes ``SubsurfModifier.levels`` but we want the
 path from the object to this property.
 
 ``<ID>.<DATA_PATH>`` == ``PROPERTY`` (CB: I THINK YOU NEED TO ELABORATE ON THIS)
