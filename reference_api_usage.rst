@@ -70,10 +70,21 @@ but you're still left wondering how to access this in a script.
 So the next step is to find out where to access objects, go down to the bottom of the page to the **References**
 section, for objects there are many references, but one of the most common places to access objects is via the context.
 
-In this case there are a few entries - for general use the ``bpy.context.active_object`` is fine, most of the other
-object members depend on the current mode. (CB: GIVEN THE REFERENCES SECTION HAS 100 LINKS, HOW WOULD THE USER KNOW TO PICK bpy.context.active_object? ALSO, CAN YOU GIVE AN EXAMPLE OF DIFFERENT MODES?)
+It's easy to be overwhelmed at this point since there ``Object`` get referenced in so many places - modifiers,
+functions, textures and constraints.
 
-So now we have enough information to find the location of the current object.
+But if you want to access any data the user has selected
+you typically only need to check the ``bpy.context`` references.
+
+Even then, in this case there are quite a few though if you read over these - most are mode specific.
+If you happen to be writing a tool that only runs in weight paint mode, then using ``weight_paint_object``
+would be appropriate.
+However to access an item the user last selected, look for the ``active`` members,
+Having access to a single active member the user selects is a convention in Blender: eg. ``active_bone``,
+``active_pose_bone``, ``active_node`` ... and in this case we can use - ``active_object``.
+
+
+So now we have enough information to find the location of the active object.
 
 .. code-block:: python
 
@@ -96,10 +107,10 @@ With ``bpy.data.objects``, this is a collection of objects so you need to access
    bpy.data.objects["Cube"].location
 
 
-Indirect Data Access
---------------------
+Nested Properties
+-----------------
 
-The previous example is quite straightforward because `location`` is an attribute of ``Object`` which can be accessed
+The previous example is quite straightforward because `location`` is a property of ``Object`` which can be accessed
 from the context directly.
 
 Here are some more complex examples:
@@ -117,10 +128,29 @@ Here are some more complex examples:
 
 
 As you can see there are times when you want to access data which is nested
-in a way that causes you to go through a few in-directions.
+in a way that causes you to go through a few indirections.
 
-While this takes some time to learn, it helps you understand how data fits together in Blender which is important
+The properties are arranged to match how data is stored internally (in blenders C code) which is often logical but
+not always quite what you would expect from using Blender.
+
+So this takes some time to learn, it helps you understand how data fits together in Blender which is important
 to know when writing scripts.
+
+
+When starting out scripting you will often run into the problem where you're not sure how to access the data you want.
+
+There are a few ways to do this.
+
+- Use the Python console's auto-complete to inspect properties. *This can be hit-and-miss but has the advantage
+  that you can easily see the values of properties and assign them too to interactively see the results.*
+
+- Copy the Data-Path from the user interface. *Explained in the next section*
+
+- Using the documentation and follow references. *Explained further in 'Indirect Data Access'*
+
+
+Indirect Data Access
+--------------------
 
 So for this example we'll go over something more involved,
 and show the steps to access from the blur nodes size property.
@@ -131,7 +161,7 @@ Start by switching to the 'Compositing' screen, enabling **Use Nodes** from the 
 Now lets say we want to access the ``X`` button via python, to automatically adjust the size of blur nodes for example.
 
 
-- Right click on the **X** button and select the online manual takes you to ``bpy.types.CompositorNodeBlur.size_x`` (CB: I GET AN ERROR SAYING THAT THERE IS NO PAGE AVAILABLE: No reference available 'CompositorNodeBlur.size_x', Update info in 'rna_wiki_reference.py'  or callback to bpy.utils.manual_map() )
+- Right click on the **X** button and select the **Online Python Reference** takes you to ``bpy.types.CompositorNodeBlur.size_x``
 
 - Knowing this is accessed via ``size_x`` isn't helpful on its own, we want to know how this node is accessed too.
 
