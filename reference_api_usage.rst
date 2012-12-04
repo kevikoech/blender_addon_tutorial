@@ -249,8 +249,8 @@ Most buttons in Blender call an operator which is also exposed to python via :mo
 
 To see the Python equivalent hover your mouse over the button and see the tool-tip,
 eg ``Python: bpy.ops.render.render()``,
-If there is no tooltip or the **Python** line is missing then this button is not an operator and can't be accessed
-from Python.
+If there is no tooltip or the ``Python:`` line is missing then this button is not using an operator and
+can't be accessed from Python.
 
 
 If you want to use this in a script you can press **Ctrl+C** while your mouse is over the button to copy it to the
