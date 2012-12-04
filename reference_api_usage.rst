@@ -203,8 +203,8 @@ Now lets say we want to access the ``X`` button via python, to automatically adj
 
 - Knowing this is accessed via ``size_x`` isn't helpful on its own, we want to know how this node is accessed too.
 
-  *from this page notice that there are no* **References** *to this class,
-   this is because the generic parent class is referenced*
+  *from this page notice that there are no* **References** *to this class,*
+  *this is because the generic parent class is referenced*
 
 - At the top of the page click on `CompositorNode(Node)`
 
@@ -242,7 +242,26 @@ For automation you are more likely to use ``bpy.data`` since you want to be able
 it, no matter what the user currently has the view set at.
 
 
-== Operators ==
+Operators
+=========
 
-TODO
+Most buttons in Blender call an operator which is also exposed to python via :mod:`bpy.ops`,
+
+To see the Python equivalent hover your mouse over the button and see the tool-tip,
+eg ``Python: bpy.ops.render.render()``,
+If there is no tooltip or the **Python** line is missing then this button is not an operator and can't be accessed
+from Python.
+
+
+If you want to use this in a script you can press **Ctrl+C** while your mouse is over the button to copy it to the
+clipboard.
+
+You can also right click on the button and view the **Online Python Reference**, this mainly shows arguments and
+their defaults however operators written in Python show their file and line number which may be useful if you
+are interested to check on the source code.
+
+.. note::
+
+   Not all operators can be called usefully from Python, for more on this see:
+   `Gotcha's, Using Operators <http://www.blender.org/documentation/blender_python_api_2_64_release/info_gotcha.html#using-operators>`_
 
