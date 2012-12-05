@@ -494,8 +494,8 @@ references our newly added operator, using Ctrl+Shift+Space as the key shortcut 
        wm = bpy.context.window_manager
        for km in addon_keymaps:
            wm.keyconfigs.addon.keymaps.remove(km)
-       # clear the list,  XXX. 'addon_keymaps.clear()' is nicer Py3.3 only use this when we upgrade
-       del addon_keymaps[:]
+       # clear the list
+       addon_keymaps.clear()
 
 
 Notice how the key-map item can have a different ``total`` setting then the default set by the operator,
