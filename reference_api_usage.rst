@@ -191,49 +191,64 @@ You can see the value update in the Subdivision-Surface modifier's UI as well as
 Indirect Data Access
 --------------------
 
-For this example we'll go over something more involved, showing the steps to access from the blur nodes size property.
+For this example we'll go over something more involved, showing the steps to access the active sculpt brushes texture.
 
-Start by switching to the 'Compositing' screen, enabling **Use Nodes** from the Header and add a blur node
-(Add -> Filter -> Blur).
+Lets say we want to access the texture of a brush via Python, to adjust its ``contrast`` for example.
 
-Now lets say we want to access the ``X`` button via python, to automatically adjust the size of blur nodes for example.
+- Start in the default scene and enable 'Sculpt' mode from the 3D-View header.
 
+- From the toolbar expand the **Texture** panel and add a new texture.
 
-- Right click on the **X** button and select the **Online Python Reference** takes you to ``bpy.types.CompositorNodeBlur.size_x``
+  *Notice the texture button its self doesn't have very useful links (you can check the tool-tips).*
 
-- Knowing this is accessed via ``size_x`` isn't helpful on its own, we want to know how this node is accessed too.
+- The contrast setting isn't exposed in the sculpt toolbar, so view the texture in the properties panel...
 
-  *from this page notice that there are no* **References** *to this class,*
-  *this is because the generic parent class is referenced*
+  - In the properties button select the Texture context.
 
-- At the top of the page click on `CompositorNode(Node)`
+  - Select the Brush icon to show the brush texture.
 
-  *There are also no references from there*
+  - Expand the **Colors** panel to locate the **Contrast** button.
 
-- At the top of the page click on `Node`, And scroll down to the References.
-  Now there are quite a few references here, ``bpy.context.active_node`` may be what you're after
-  however this only works when the script executes in the node editor.
+- Right click on the contrast button and select **Online Python Reference** This takes you to ``bpy.types.Texture.contrast``
 
-- In this case we'll select ``CompositorNodeTree.nodes``.
+- Now we can see that ``contrast`` is a property of texture, so next we'll check on how to access the texture from the brush.
 
-- The ``CompositorNodeTree`` is referenced from ``Scene.node_tree``.
+- Check on the **References** at the bottom of the page, sometimes there are many references, and it may take
+  some guess work to find the right one, but in this case its obviously ``Brush.texture``.
 
-Now you can use the python console to form the nested properties needed to access the nodes size_x,
+  *Now we know that the texture can be accessed from* ``bpy.data.brushes["BrushName"].texture``
+  *but normally you won't want to access the brush by name, so we'll see now to access the active brush instead.*
+
+- So the next step is to check on where brushes are accessed from via the **References**.
+  In this case there is simply ``bpy.context.brush`` which is all we need.
+  
+
+Now you can use the Python console to form the nested properties needed to access brush textures contrast,
 logically we now know.
 
-*Scene -> NodeTree -> Nodes -> Size X*
+*Context -> Brush -> Texture -> Contrast*
 
 Since the attribute for each is given along the way we can compose the data path in the python console:
 
 .. code-block:: python
 
-   bpy.context.scene.node_tree.nodes["Blur"].size_x
+   bpy.context.brush.texture.contrast
 
 
-Admittedly some of the choices made when going backwards through the references aren't so obvious,
-when encountering areas like this for the first time it may take some trial and error to get the path you are
-looking for.
-On the other hand there can be multiple ways to access the same data, which you choose often depends on the task.
+There can be multiple ways to access the same data, which you choose often depends on the task.
+
+An alternate path to access the same setting is...
+
+.. code-block:: python
+
+   bpy.context.sculpt.brush.texture.contrast
+
+Or access the brush directly...
+
+.. code-block:: python
+
+   bpy.data.brushes["BrushName"].texture.contrast
+
 
 If you are writing a user tool normally you want to use the ``bpy.context`` since the user normally expects
 the tool to operate on what they have selected.
@@ -245,7 +260,7 @@ it, no matter what the user currently has the view set at.
 Operators
 =========
 
-Most key strokes and buttons in Blender call an operator which is also exposed to python via :mod:`bpy.ops`,
+Most key-strokes and buttons in Blender call an operator which is also exposed to python via :mod:`bpy.ops`,
 
 To see the Python equivalent hover your mouse over the button and see the tool-tip,
 eg ``Python: bpy.ops.render.render()``,
