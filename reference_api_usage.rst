@@ -245,11 +245,11 @@ it, no matter what the user currently has the view set at.
 Operators
 =========
 
-Most buttons in Blender call an operator which is also exposed to python via :mod:`bpy.ops`,
+Most key strokes and buttons in Blender call an operator which is also exposed to python via :mod:`bpy.ops`,
 
 To see the Python equivalent hover your mouse over the button and see the tool-tip,
 eg ``Python: bpy.ops.render.render()``,
-If there is no tooltip or the ``Python:`` line is missing then this button is not using an operator and
+If there is no tool-tip or the ``Python:`` line is missing then this button is not using an operator and
 can't be accessed from Python.
 
 
@@ -264,4 +264,23 @@ are interested to check on the source code.
 
    Not all operators can be called usefully from Python, for more on this see:
    `Gotcha's, Using Operators <http://www.blender.org/documentation/blender_python_api_2_64_release/info_gotcha.html#using-operators>`_
+
+
+Info View
+---------
+
+Blender records operators you run and displays them in the **Info** space.
+This is located above the file-menu which can be dragged down to display its contents.
+
+Select the **Script** screen that comes default with Blender to see its output.
+You can perform some actions and see them show up - delete a vertex for example.
+
+Each entry can be selected (RMB) and copied (Ctrl+C), usually to paste in the text editor or python console.
+
+.. note::
+
+   Not all operators get registered for display,
+   zooming the view for example isn't so useful to repeat so its excluded from the output.
+
+   To display *every* operator that runs, launch blender with ``--debug-wm``, this can be helpful for troubleshooting.
 
