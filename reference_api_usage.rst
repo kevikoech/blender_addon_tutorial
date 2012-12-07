@@ -12,11 +12,11 @@ This document is designed to help you understand how to use the reference api.
 Reference API Scope
 ===================
 
-The reference API covers ``bpy.types``, which stores types accessed via ``bpy.context`` - *The user context*
-or ``bpy.data`` - *Blend file data*.
+The reference API covers :mod:`bpy.types`, which stores types accessed via :mod:`bpy.context` - *The user context*
+or :mod:`bpy.data` - *Blend file data*.
 
-Other modules such as ``bge``, ``bmesh`` and ``aud`` are not using Blenders data API
-so this document doesn't apply to these modules.
+Other modules such as :mod:`bge`, :mod:`bmesh` and :mod:`aud` are not using Blenders data API
+so this document doesn't apply to those modules.
 
 
 Data Access
@@ -36,8 +36,7 @@ ID Data-Blocks are used in Blender as top-level data containers.
 From the user interface this isn't so obvious, but when developing you need to know about ID Data-Blocks.
 
 ID data types include Scene, Group, Object, Mesh, Screen, World, Armature, Image and Texture.
-for a full list see the sub-classes of
-`bpy.types.ID <http://www.blender.org/documentation/blender_python_api_2_64_6/bpy.types.ID.html>`_: 
+for a full list see the sub-classes of :class:`bpy.types.ID`
 
 Here are some characteristics ID Data-Blocks share.
 
@@ -59,7 +58,7 @@ Lets start with a simple case, say you wan't a python script to adjust the objec
 Start by finding this setting in the interface ``Properties Window -> Object -> Transform -> Location``
 
 From the button you can right click and select **Online Python Reference**, this will link you to:
-http://www.blender.org/documentation/blender_python_api_2_64_6/bpy.types.Object.html#bpy.types.Object.location
+:class:`bpy.types.Object.location`
 
 Being an API reference, this link often gives little more information then the tool-tip, though some of the pages
 include examples (normally at the top of the page).
@@ -74,7 +73,7 @@ It's easy to be overwhelmed at this point since there ``Object`` get referenced 
 functions, textures and constraints.
 
 But if you want to access any data the user has selected
-you typically only need to check the ``bpy.context`` references.
+you typically only need to check the :mod:`bpy.context` references.
 
 Even then, in this case there are quite a few though if you read over these - most are mode specific.
 If you happen to be writing a tool that only runs in weight paint mode, then using ``weight_paint_object``
@@ -92,15 +91,16 @@ So now we have enough information to find the location of the active object.
 
 You can type this into the python console to see the result.
 
-The other common place to access objects in the reference is ``BlendData.objects``.
+The other common place to access objects in the reference is :class:`bpy.types.BlendData.objects`.
 
 .. note::
 
-   This is **not** listed as ``bpy.data.objects``,
-   this is because ``bpy.data`` is an instance of the ``BlendData`` class, so the documentation points there.
+   This is **not** listed as :mod:`bpy.data.objects`,
+   this is because :mod:`bpy.data` is an instance of the :class:`bpy.types.BlendData` class,
+   so the documentation points there.
 
 
-With ``bpy.data.objects``, this is a collection of objects so you need to access one of its members.
+With :mod:`bpy.data.objects`, this is a collection of objects so you need to access one of its members.
 
 .. code-block:: python
 
@@ -110,7 +110,7 @@ With ``bpy.data.objects``, this is a collection of objects so you need to access
 Nested Properties
 -----------------
 
-The previous example is quite straightforward because `location`` is a property of ``Object`` which can be accessed
+The previous example is quite straightforward because ``location`` is a property of ``Object`` which can be accessed
 from the context directly.
 
 Here are some more complex examples:
@@ -144,33 +144,35 @@ There are a few ways to do this.
 - Use the Python console's auto-complete to inspect properties. *This can be hit-and-miss but has the advantage
   that you can easily see the values of properties and assign them to interactively see the results.*
 
-- Copy the Data-Path from the user interface. *Explained in 'Copy Data Path'*
+- Copy the Data-Path from the user interface. *Explained further in :ref:`Copy Data Path <info_data_path_copy>`*
 
-- Using the documentation to follow references. *Explained further in 'Indirect Data Access'*
+- Using the documentation to follow references. *Explained further in :ref:`Indirect Data Access <info_data_path_indirect>`*
 
+
+.. _info_data_path_copy
 
 Copy Data Path
 --------------
 
-Blender can compute the Python string to a property which is shown in the tooltip, on the line below ``Python: ...``,
-This saves having to use the API reference to click back up the references to find where data is accessed from. (JN: NOTE - THIS IS NEW IN REV-52709. ADDED BECAUSE OF WRITING THIS DOC ;) )
+Blender can compute the Python string to a property which is shown in the tool-tip, on the line below ``Python: ...``,
+This saves having to use the API reference to click back up the references to find where data is accessed from.
 
-There is a user-interface feature to copy the data-path which gives the path from an ``ID`` data-block,
+There is a user-interface feature to copy the data-path which gives the path from an :class:`bpy.types.ID` data-block,
 to its property.
 
 To see how this works we'll get the path to the Subdivision-Surface modifiers subdivision setting.
 
 Start with the default scene and select the **Modifiers** tab, then add a **Subdivision-Surface** modifier to the cube.
 
-Now hover your mouse over the button labeled **View**, The tool-tip includes ``SubsurfModifier.levels`` but we want the
-path from the object to this property.
+Now hover your mouse over the button labeled **View**, The tool-tip includes :class:`bpy.types.SubsurfModifier.levels`
+but we want the path from the object to this property.
 
 Note that the text copied won't include the ``bpy.data.collection["name"].`` component since its assumed that
-you won't be doing collection lookups on every access and typically you'll want to use the context rather
-then access each ``ID`` by name.
+you won't be doing collection look-ups on every access and typically you'll want to use the context rather
+then access each :class:`bpy.types.ID` instance by name.
 
 
-Type in the ID path into a Python console ``bpy.context.active_object.`` Include the trailing dot and don't hit "enter", yet. 
+Type in the ID path into a Python console :mod:`bpy.context.active_object`. Include the trailing dot and don't hit "enter", yet. 
 
 Now right-click on the button and select **Copy Data Path**, then paste the result into the console.
 
@@ -188,6 +190,8 @@ Hit "enter" and you'll get the current value of 1. Now try changing the value to
 
 You can see the value update in the Subdivision-Surface modifier's UI as well as the cube.
 
+
+.. _info_data_path_indirect
 
 Indirect Data Access
 --------------------
@@ -251,10 +255,10 @@ Or access the brush directly...
    bpy.data.brushes["BrushName"].texture.contrast
 
 
-If you are writing a user tool normally you want to use the ``bpy.context`` since the user normally expects
+If you are writing a user tool normally you want to use the :mod:`bpy.context` since the user normally expects
 the tool to operate on what they have selected.
 
-For automation you are more likely to use ``bpy.data`` since you want to be able to access specific data and manipulate
+For automation you are more likely to use :mod:`bpy.data` since you want to be able to access specific data and manipulate
 it, no matter what the user currently has the view set at.
 
 
@@ -269,7 +273,7 @@ If there is no tool-tip or the ``Python:`` line is missing then this button is n
 can't be accessed from Python.
 
 
-If you want to use this in a script you can press **Ctrl+C** while your mouse is over the button to copy it to the
+If you want to use this in a script you can press :kbd:`Control-C` while your mouse is over the button to copy it to the
 clipboard.
 
 You can also right click on the button and view the **Online Python Reference**, this mainly shows arguments and
@@ -278,8 +282,7 @@ are interested to check on the source code.
 
 .. note::
 
-   Not all operators can be called usefully from Python, for more on this see:
-   `Gotcha's, Using Operators <http://www.blender.org/documentation/blender_python_api_2_64_release/info_gotcha.html#using-operators>`_
+   Not all operators can be called usefully from Python, for more on this see :ref:`using operators <using_operators>`.
 
 
 Info View
@@ -291,12 +294,12 @@ This is located above the file-menu which can be dragged down to display its con
 Select the **Script** screen that comes default with Blender to see its output.
 You can perform some actions and see them show up - delete a vertex for example.
 
-Each entry can be selected (RMB) and copied (Ctrl+C), usually to paste in the text editor or python console.
+Each entry can be selected (Right-Mouse-Button), then copied :kbd:`Control-C`, usually to paste in the text editor or python console.
 
 .. note::
 
    Not all operators get registered for display,
    zooming the view for example isn't so useful to repeat so its excluded from the output.
 
-   To display *every* operator that runs, launch blender with ``--debug-wm``, this can be helpful for troubleshooting.
+   To display *every* operator that runs see :ref:`Show All Operators <info_show_all_operators>`
 

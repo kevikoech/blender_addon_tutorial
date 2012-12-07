@@ -33,27 +33,26 @@ Before going through the tutorial you should...
 Suggested reading before starting this tutorial.
 
 * `Dive Into Python <http://getpython3.com/diveintopython3/index.html>`_ sections (1, 2, 3, 4, and 7).
-* `Blender API Quickstart <http://www.blender.org/documentation/blender_python_api_2_64_release/info_quickstart.html>`_
+* :ref:`Blender API Quickstart <info_quickstart>`
   to help become familiar with Blender/Python basics.
 
 
 To best troubleshoot any error message Python prints while writing scripts you run blender with from a terminal,
-see: `Use The Terminal <http://www.blender.org/documentation/blender_python_api_2_64_release/info_tips_and_tricks.html#use-the-terminal>`_
+see :ref:`Use The Terminal <use_the_terminal>`.
 
 Documentation Links
 ===================
 
 While going through the tutorial you may want to look into our reference documentation.
 
-* `Blender API Overview <http://www.blender.org/documentation/blender_python_api_2_64_release/info_overview.html>`_
-  this document is rather detailed but helpful if you want to know more on a topic.
+* :ref:`Blender API Overview <info_overview>`. -
+  *This document is rather detailed but helpful if you want to know more on a topic.*
 
-* `bpy.context <http://www.blender.org/documentation/blender_python_api_2_64_release/bpy.context.html>`_ api reference,
-  handy to have a list of available items your script may operate on.
+* :mod:`bpy.context` api reference. -
+  *Handy to have a list of available items your script may operate on.*
 
-* `bpy.types.Operator <http://www.blender.org/documentation/blender_python_api_2_64_release/bpy.types.Operator.html>`_
-  the following addons define operators, these docs give details and more examples of operators.
-
+* :class:`bpy.types.Operator`. -
+  *The following addons define operators, these docs give details and more examples of operators.*
 
 
 ******
@@ -87,14 +86,14 @@ To give an example, here is the simplest possible addon.
 
 
 
-Notice this addon does not do anything related to Blender, (the ``bpy`` module is not imported for example).
+Notice this addon does not do anything related to Blender, (the :mod:`bpy` module is not imported for example).
 
 This is a contrived example of an addon that serves to illustrate the point
 that the base requirements of an addon are simple.
 
 An addon will typically register operators, panels, menu items etc, but its worth noting that _any_ script can do this,
 when executed from the text editor or even the interactive console - there is nothing inherently different about an
-addon that allows it to integrate with Blender, such functionality is just provided by the ``bpy`` module for any
+addon that allows it to integrate with Blender, such functionality is just provided by the :mod:`bpy` module for any
 script to access.
 
 So an addon is just a way to encapsulate a Python module in a way a user can easily utilize.
@@ -281,7 +280,8 @@ As before, first we will start with a script, develop it, then convert into an a
    obj_new.location = cursor
 
 
-Now try copy this script into Blender and run it on the default cube. Make sure you click to move the 3D cursor before running as the duplicate will appear at the cursor's location.
+Now try copy this script into Blender and run it on the default cube.
+Make sure you click to move the 3D cursor before running as the duplicate will appear at the cursor's location.
 
 
 ... go off and test ...
@@ -320,12 +320,12 @@ Next, we're going to do this in a loop, to make an array of objects between the 
 Try run this script with with the active object and the cursor spaced apart to see the result.
 
 With this script you'll notice we're doing some math with the object location and cursor, this works because both are
-3D **Vector** instances, a convenient class provided by the **mathutils** module and allows vectors to be multiplied
-by numbers and matrices.
+3D :class:`mathutils.Vector` instances, a convenient class provided by the :mod:`mathutils` module and
+allows vectors to be multiplied by numbers and matrices.
 
-If you are interested in this area, read into **mathutils.Vector** - there are many handy utility functions
+If you are interested in this area, read into :class:`mathutils.Vector` - there are many handy utility functions
 such as getting the angle between vectors, cross product, dot products
-as well as more advanced functions in **mathutils.geometry** such as bezier spline interpolation and
+as well as more advanced functions in :mod:`mathutils.geometry` such as bezier spline interpolation and
 ray-triangle intersection.
 
 For now we'll focus on making this script an addon, but its good to know that this 3D math module is available and
@@ -422,11 +422,11 @@ Operator properties are defined via bpy.props module, this is added to the class
    self.total
 
 
-These properties from ``bpy.props`` are handled specially by Blender when the class is registered
+These properties from :mod:`bpy.props` are handled specially by Blender when the class is registered
 so they display as buttons in the user interface.
 There are many arguments you can pass to properties to set limits, change the default and display a tooltip.
 
-see: `bpy.props <http://www.blender.org/documentation/blender_python_api_2_64_release/bpy.props.html#bpy.props.IntProperty>`_
+.. seealso:: :mod:`bpy.props.IntProperty`
 
 This document doesn't go into details about using other property types,
 however the link above includes examples of more advanced property usage.
@@ -459,7 +459,7 @@ The method used for adding a menu item is to append a draw function into an exis
        bpy.types.VIEW3D_MT_object.append(menu_func)
 
 
-For docs on menus see: `bpy.types.Menu <http://www.blender.org/documentation/blender_python_api_2_64_release/bpy.types.Menu.html#extending-menus>`_
+For docs on extending menus see: :doc:`bpy.types.Menu`.
 
 
 Keymap
@@ -467,8 +467,9 @@ Keymap
 
 In Blender addons have their own key-maps so as not to interfere with Blenders built in key-maps.
 
-In the example below, a new object-mode ``KeyMap`` is added, then a ``KeyMapItem`` is added to the key-map which
-references our newly added operator, using Ctrl+Shift+Space as the key shortcut to activate it.
+In the example below, a new object-mode :class:`bpy.types.KeyMap` is added,
+then a :class:`bpy.types.KeyMapItem` is added to the key-map which references our newly added operator,
+using :kbd:`Ctrl-Shift-Space` as the key shortcut to activate it.
 
 
 .. code-block:: python
@@ -504,15 +505,15 @@ this allows you to have multiple keys accessing the same operator with different
 
 .. note::
 
-   While Ctrl+Shift+Space isn't a default Blender key shortcut, its hard to make sure addons won't
+   While :kbd:`Ctrl-Shift-Space` isn't a default Blender key shortcut, its hard to make sure addons won't
    overwrite each others keymaps, At least take care when assigning keys that they don't
    conflict with important functionality within Blender.
 
 For API documentation on the functions listed above, see:
-`bpy.types.KeyMaps.new <http://www.blender.org/documentation/blender_python_api_2_64_release/bpy.types.KeyMaps.html#bpy.types.KeyMaps.new>`_,
-`bpy.types.KeyMap <http://www.blender.org/documentation/blender_python_api_2_64_release/bpy.types.KeyMap.html#bpy.types.KeyMap>`_,
-`bpy.types.KeyMapItems.new <http://www.blender.org/documentation/blender_python_api_2_64_release/bpy.types.KeyMapItems.html#bpy.types.KeyMapItems.new>`_,
-`bpy.types.KeyMapItem <http://www.blender.org/documentation/blender_python_api_2_64_release/bpy.types.KeyMapItem.html#bpy.types.KeyMapItem>`_,
+:class:`bpy.types.KeyMaps.new`,
+:class:`bpy.types.KeyMap`,
+:class:`bpy.types.KeyMapItems.new`,
+:class:`bpy.types.KeyMapItem`.
 
 
 Bringing it all together
@@ -608,8 +609,8 @@ After selecting it from the menu, you can choose how many instance of the cube y
    times when enabled through the user preferences.
 
 
-Conclude
-========
+Conclusions
+===========
 
 Addons can encapsulate certain functionality neatly for writing tools to improve your work-flow or for writing utilities
 for others to use.
@@ -630,15 +631,15 @@ you want to see example code for, this is a good place to start.
 
 Here are some sites you might like to check on after completing this tutorial.
 
-`Blender/Python API Overview <http://www.blender.org/documentation/blender_python_api_2_64_release/info_overview.html>`_
-*For more background details on Blender/Python integration.*
+* :ref:`Blender/Python API Overview <info_overview>` -
+  *For more background details on Blender/Python integration.*
 
-`How to Think Like a Computer Scientist <http://interactivepython.org/courselib/static/thinkcspy/index.html>`_
-*Great info for those who are still learning Python.*
+* `How to Think Like a Computer Scientist <http://interactivepython.org/courselib/static/thinkcspy/index.html>`_ -
+  *Great info for those who are still learning Python.*
 
-`Blender Development (Wiki) <http://wiki.blender.org/index.php/Dev:Contents>`_
-*Blender Development, general information and helpful links.*
+* `Blender Development (Wiki) <http://wiki.blender.org/index.php/Dev:Contents>`_ -
+  *Blender Development, general information and helpful links.*
 
-`Blender Artists (Coding Section) <http://blenderartists.org/forum/forumdisplay.php?47-Coding>`_
-*forum where people ask Python development questions*
+* `Blender Artists (Coding Section) <http://blenderartists.org/forum/forumdisplay.php?47-Coding>`_ -
+  *forum where people ask Python development questions*
 
