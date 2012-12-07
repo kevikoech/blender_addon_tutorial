@@ -182,7 +182,8 @@ So now you should have the answer:
 
 Hit "enter" and you'll get the current value of 1. Now try changing the value to 2:
 
--- code-block:: python
+.. code-block:: python
+
   bpy.context.active_object.modifiers["Subsurf"].levels = 2
 
 You can see the value update in the Subdivision-Surface modifier's UI as well as the cube.
