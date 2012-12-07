@@ -142,7 +142,7 @@ When starting out scripting you will often run into the problem where you're not
 There are a few ways to do this.
 
 - Use the Python console's auto-complete to inspect properties. *This can be hit-and-miss but has the advantage
-  that you can easily see the values of properties and assign them too to interactively see the results.*
+  that you can easily see the values of properties and assign them to interactively see the results.*
 
 - Copy the Data-Path from the user interface. *Explained in 'Copy Data Path'*
 
